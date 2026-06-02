@@ -1,0 +1,45 @@
+from fastapi import HTTPException, status
+
+
+class BaseHTTPException(HTTPException):
+    pass
+
+
+class UserAlreadyExistsError(BaseHTTPException):
+    def __init__(self):
+        super().__init__(
+            status_code=status.HTTP_409_CONFLICT,
+            detail="User with this email already exists"
+        )
+
+
+class InvalidCredentialsError(BaseHTTPException):
+    def __init__(self):
+        super().__init__(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Invalid email or password"
+        )
+
+
+class InvalidTokenError(BaseHTTPException):
+    def __init__(self):
+        super().__init__(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Invalid token"
+        )
+
+
+class TokenExpiredError(BaseHTTPException):
+    def __init__(self):
+        super().__init__(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Token has expired"
+        )
+
+
+class UserNotFoundError(BaseHTTPException):
+    def __init__(self):
+        super().__init__(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="User not found"
+        )
